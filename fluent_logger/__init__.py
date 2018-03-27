@@ -57,3 +57,15 @@ class FluentLogger(logging.Logger):
         id = kwargs.pop('StateId', self.backpack.id)
         state_manager = StateManager()
         state_manager.upsert(self.backpack, StateId = id)
+        
+    def clone(self):
+        logger = FluentLogger()
+        for handler in self.logger.handlers:
+            logger.with_handler(handler)
+        for key in self.backpack.perm_items.keys():
+            logger.with_item(key, self.backpack.perm_items[key])
+        for timer in self.backpack.timers.keys():
+            logger.with_timer(timer, self.backpack.timers[timer])
+        logger.setLevel(self.logger.level)
+        return logger
+        

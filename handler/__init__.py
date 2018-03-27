@@ -37,5 +37,6 @@ class KinesisFirehoseHandler(logging.Handler):
             if (self.backpack.one_time_items):
                 self.backpack.one_time_items = {}
         except:
+            raise
             self.handleError(record)
 
