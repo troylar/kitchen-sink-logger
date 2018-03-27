@@ -1,7 +1,9 @@
+from logging import Logger
 import logging
 from backpack import Backpack
+from state_manager import StateManager
 
-class FluentLogger(logging.Logger):
+class FluentLogger(Logger):
     def __init__(self, **kwargs):
         self.context = {}
         name = kwargs.pop("name", "logger")
@@ -45,8 +47,8 @@ class FluentLogger(logging.Logger):
         self.logger.error(msg)
         return self
         
-    def with_timer(self, name):
-        self.backpack.with_timer(name)
+    def with_timer(self, name, start_time=None):
+        self.backpack.with_timer(name, start_time)
         return self
     
     def without_timer(self, name):
