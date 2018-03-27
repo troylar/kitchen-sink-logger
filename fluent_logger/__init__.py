@@ -1,7 +1,9 @@
+from logging import Logger
 import logging
 from backpack import Backpack
+from state_manager import StateManager
 
-class FluentLogger(logging.Logger):
+class FluentLogger(Logger):
     def __init__(self, **kwargs):
         self.context = {}
         name = kwargs.pop("name", "logger")
@@ -45,8 +47,8 @@ class FluentLogger(logging.Logger):
         self.logger.error(msg)
         return self
         
-    def with_timer(self, name):
-        self.backpack.with_timer(name)
+    def with_timer(self, name, start_time=None):
+        self.backpack.with_timer(name, start_time)
         return self
     
     def without_timer(self, name):
@@ -57,3 +59,15 @@ class FluentLogger(logging.Logger):
         id = kwargs.pop('StateId', self.backpack.id)
         state_manager = StateManager()
         state_manager.upsert(self.backpack, StateId = id)
+        
+    def clone(self):
+        logger = FluentLogger()
+        for handler in self.logger.handlers:
+            logger.with_handler(handler)
+        for key in self.backpack.perm_items.keys():
+            logger.with_item(key, self.backpack.perm_items[key])
+        for timer in self.backpack.timers.keys():
+            logger.with_timer(timer, self.backpack.timers[timer])
+        logger.setLevel(self.logger.level)
+        return logger
+        

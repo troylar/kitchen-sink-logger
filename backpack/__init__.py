@@ -41,8 +41,10 @@ class Backpack(object):
         del self.metrics[metric]
         return self
 
-    def with_timer(self, name):
-        self.timers[name] = datetime.datetime.now().isoformat()
+    def with_timer(self, name, start_time=None):
+        if not start_time:
+            start_time = datetime.datetime.now().isoformat()
+        self.timers[name] = start_time
         return self
         
     def without_timer(self, name):
