@@ -1,8 +1,8 @@
 import boto3
 import logging
-import json
 import datetime
 import dateutil.parser
+
 
 class KinesisFirehoseHandler(logging.Handler):
     """
@@ -15,7 +15,7 @@ class KinesisFirehoseHandler(logging.Handler):
             level=kwargs.pop('level', logging.NOTSET))
         self.stream_name = kwargs.pop('stream_name', None)
         self.client = boto3.client('firehose')
-        
+
     def with_backpack(self, backpack):
         self.backpack = backpack
         return self
@@ -28,15 +28,16 @@ class KinesisFirehoseHandler(logging.Handler):
                 record.__dict__.update(self.backpack.one_time_items)
                 if(self.backpack.timers):
                     for m in self.backpack.timers:
-                        
-                        delta = datetime.datetime.now() - dateutil.parser.parse(self.backpack.timers[m])
-                        record.__dict__['{}InMs'.format(m)] = int(delta.total_seconds() * 1000)
+
+                        delta = datetime.datetime.now(
+                        ) - dateutil.parser.parse(self.backpack.timers[m])
+                        record.__dict__['{}InMs'.format(m)] = int(
+                            delta.total_seconds() * 1000)
             self.client.put_record(
                 DeliveryStreamName=self.stream_name,
-                Record={ 'Data': self.format(record) })
+                Record={'Data': self.format(record)})
             if (self.backpack.one_time_items):
                 self.backpack.one_time_items = {}
-        except:
+        except BaseException:
             raise
             self.handleError(record)
-

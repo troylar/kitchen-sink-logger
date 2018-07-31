@@ -3,15 +3,16 @@ import json
 from botocore.exceptions import ClientError
 from backpack import Backpack
 
+
 class StateManager(object):
     def __init__(self, **kwargs):
         table_name = kwargs.pop('TableName', 'BackpackState')
         dynamodb = boto3.resource('dynamodb')
         self.table = dynamodb.Table(table_name)
-    
+
     def upsert(self, backpack, **kwargs):
         state_id = kwargs.get('StateId', backpack.id)
-        response = self.table.put_item(
+        self.table.put_item(
             Item={
                 'state_id': state_id,
                 'perm_items': backpack.perm_items,
@@ -19,7 +20,7 @@ class StateManager(object):
                 'timers': backpack.timers
             }
         )
-        
+
     def get(self, state_id):
         try:
             response = self.table.get_item(

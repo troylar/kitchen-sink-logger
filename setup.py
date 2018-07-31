@@ -1,4 +1,3 @@
-import os
 from setuptools import setup, find_packages
 
 # Utility function to read the README file.
@@ -7,14 +6,15 @@ from setuptools import setup, find_packages
 # string in below ...
 
 setup(
-    name = "kitchen-sink-logger",
-    version = "0.0.9",
-    author = "Troy Larson",
-    author_email = "troylar@gmail.com",
-    description = ("Easily log everything, including the kitchen sink, if that's your thing"),
-    license = "MIT",
-    keywords = "logging",
-    url = "http://packages.python.org/kitchen-sink-logger",
+    name="kitchen-sink-logger",
+    version="0.0.9",
+    author="Troy Larson",
+    author_email="troylar@gmail.com",
+    description=(
+        "Easily log everything, including the kitchen sink, if that's your thing"),  # noqa: E501
+    license="MIT",
+    keywords="logging",
+    url="http://packages.python.org/kitchen-sink-logger",
     packages=find_packages(),
     long_description='here',
     classifiers=[
