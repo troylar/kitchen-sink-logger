@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="kitchen-sink-logger",
-    version='0.0.10.dev0',
+    version='0.0.10',
     author="Troy Larson",
     author_email="troylar@gmail.com",
     description=(
