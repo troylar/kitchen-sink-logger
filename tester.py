@@ -1,4 +1,4 @@
-from fluent_logger import FluentLogger
+from four_d_logger import FourDLogger
 import logging
 from handler import KinesisFirehoseHandler
 from formatter import SimpleJsonFormatter

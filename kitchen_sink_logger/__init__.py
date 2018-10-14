@@ -4,7 +4,7 @@ from backpack import Backpack
 from state_manager import StateManager
 
 
-class FluentLogger(Logger):
+class KitchenSinkLogger(Logger):
     def __init__(self, **kwargs):
         self.context = {}
         name = kwargs.pop("name", "logger")
