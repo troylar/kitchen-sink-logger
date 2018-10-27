@@ -5,12 +5,13 @@ from state_manager import StateManager
 
 
 class KitchenSinkLogger(Logger):
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.context = {}
         name = kwargs.pop("name", "logger")
         self.logger = logging.getLogger(name)
         self.backpack = {}
         self.backpack = kwargs.pop("backpack", Backpack())
+        logging.Logger.__init__(self, name, *args, **kwargs)
 
     def with_item(self, key, value):
         self.backpack.with_item(key, value)
