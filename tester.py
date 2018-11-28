@@ -1,4 +1,4 @@
-from four_d_logger import FourDLogger
+from kitchen_sink_logger import KitchenSinkLogger
 import logging
 from handler import KinesisFirehoseHandler
 from formatter import SimpleJsonFormatter
@@ -6,7 +6,7 @@ from backpack import Backpack
 from state_manager import StateManager
 
 logger = FluentLogger()
-handler = KinesisFirehoseHandler(stream_name='metrics-logging')
+handler = KinesisFirehoseHandler(stream_name='pollexy-logging')
 handler.setFormatter(SimpleJsonFormatter())
 logger.with_handler(handler)
 logger.with_timer("TestTimer")

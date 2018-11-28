@@ -48,6 +48,10 @@ class KitchenSinkLogger(Logger):
         self.logger.error(msg)
         return self
 
+    def exception(self, msg):
+        self.logger.exception(msg)
+        return self
+
     def with_timer(self, name, start_time=None):
         self.backpack.with_timer(name, start_time)
         return self
@@ -62,7 +66,7 @@ class KitchenSinkLogger(Logger):
         state_manager.upsert(self.backpack, StateId=id)
 
     def clone(self):
-        logger = FluentLogger()
+        logger = KitchenSinkLogger()
         for handler in self.logger.handlers:
             logger.with_handler(handler)
         for key in self.backpack.perm_items.keys():
