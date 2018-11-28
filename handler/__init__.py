@@ -21,6 +21,7 @@ class KinesisFirehoseHandler(logging.Handler):
         return self
 
     def emit(self, record):
+        print('emitting record')
         try:
             if self.backpack:
                 record.__dict__.update(self.backpack.perm_items)
@@ -33,6 +34,7 @@ class KinesisFirehoseHandler(logging.Handler):
                         ) - dateutil.parser.parse(self.backpack.timers[m])
                         record.__dict__['{}InMs'.format(m)] = int(
                             delta.total_seconds() * 1000)
+            print('putting record in {}'.format(self.stream_name))
             self.client.put_record(
                 DeliveryStreamName=self.stream_name,
                 Record={'Data': self.format(record)})

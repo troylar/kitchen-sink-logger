@@ -33,7 +33,7 @@ class KitchenSinkLogger(Logger):
 
     def log_metric(self, message, name, value):
         self.backpack.with_metric(name, value)
-        self.logger.warning(message)
+        self.logger.info(message)
         self.backpack.without_metric(name)
 
     def with_level(self, level):
