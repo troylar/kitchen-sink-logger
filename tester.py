@@ -1,7 +1,7 @@
 from kitchen_sink_logger import KitchenSinkLogger
 import logging
-from handler import KinesisFirehoseHandler
-from formatter import SimpleJsonFormatter
+from handler.firehose import KinesisFirehoseHandler
+from json_formatter.json import SimpleJsonFormatter
 from backpack import Backpack
 from state_manager import StateManager
 

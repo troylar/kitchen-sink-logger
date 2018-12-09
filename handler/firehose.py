@@ -15,6 +15,7 @@ class KinesisFirehoseHandler(logging.Handler):
             level=kwargs.pop('level', logging.NOTSET))
         self.stream_name = kwargs.pop('stream_name', None)
         self.client = boto3.client('firehose')
+        print('firehouse handler')
 
     def with_backpack(self, backpack):
         self.backpack = backpack
