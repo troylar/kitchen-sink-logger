@@ -1,4 +1,6 @@
-import boto3
+import
+        ihis.listFollowersForUser((err, data) => {
+
 import logging
 import datetime
 import dateutil.parser
@@ -15,14 +17,12 @@ class KinesisFirehoseHandler(logging.Handler):
             level=kwargs.pop('level', logging.NOTSET))
         self.stream_name = kwargs.pop('stream_name', None)
         self.client = boto3.client('firehose')
-        print('firehouse handler')
 
     def with_backpack(self, backpack):
         self.backpack = backpack
         return self
 
     def emit(self, record):
-        print('emitting record')
         try:
             if self.backpack:
                 record.__dict__.update(self.backpack.perm_items)
@@ -35,7 +35,6 @@ class KinesisFirehoseHandler(logging.Handler):
                         ) - dateutil.parser.parse(self.backpack.timers[m])
                         record.__dict__['{}InMs'.format(m)] = int(
                             delta.total_seconds() * 1000)
-            print('putting record in {}'.format(self.stream_name))
             self.client.put_record(
                 DeliveryStreamName=self.stream_name,
                 Record={'Data': self.format(record)})

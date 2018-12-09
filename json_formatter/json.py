@@ -19,5 +19,4 @@ class SimpleJsonFormatter(logging.Formatter):
                 value = self.formatStack(value)
             ret[attr] = value
         ret['timestamp'] = arrow.utcnow().isoformat()
-        print(json.dumps(ret))
         return json.dumps(ret)
