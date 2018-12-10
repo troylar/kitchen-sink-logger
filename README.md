@@ -1,6 +1,6 @@
 # Kitchen Sink Logger for Python
 ## Overview
-In any running application, you literally have a split-second window where anything you want to know about that application at that moment is available. This could be anything process ID, transaction ID, user ID, etc. and/or ten other important pieces of information. If that information is not logged somewhere, it's gone forever. Maybe you could go back and piece it together from other contextual information, but you *that had that data fully in your grasp*, and if you didn't log it, you can't get it back.
+In any running application, you literally have a split-second window where anything you want to know about that application at that moment is available. This could be anything such as process ID, transaction ID, user ID, etc. and/or ten other important pieces of information. If that information is not logged somewhere, it's gone forever. Maybe you could go back and piece it together from other contextual information, but you *that had that data fully in your grasp*, and if you didn't log it, you can't get it back.
 
 The challenge with typical logging is that it's **so damn verbose** and intrusive in the code base.  For example, if I want to log a user login process, I would normally log it like this:
 
