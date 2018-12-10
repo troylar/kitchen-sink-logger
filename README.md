@@ -89,3 +89,9 @@ In this example, we're creating three timers: One for overall time, one for the 
      logger.backpack = sm.get(backpack_id)
      logger.with_timer('LambdaTwoTimer')
 	 logger.('Do something else')
+
+### Basic Concept #5: Metrics
+Obviously, metrics are crucial as well and while CloudWatch metrics are valuable, it doesn't contain all of the contextual data that we have in the backpack. Kitchen Sink Logger lets you log a metric to ElasticSearch and includes all the data in the backpack.
+
+    logger = KitchenSinkLogger()
+    logger.log_metric('ReadsPerSecond', 100)
