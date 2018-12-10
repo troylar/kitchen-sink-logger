@@ -12,6 +12,15 @@ Let's add additional data for context:
 
 And it just gets worse from there. **DEVELOPERS HATE LOGGING BECAUSE IT'S A PAIN IN THE ASS AND THAT IS WHY I WROTE THE KITCHEN SINK LOGGER.** And don't get me started on logging metrics. Actually, you can get me started, because Kitchen Sink Logger handles metrics as well.
 
+## Quick Install
+
+    $ pip install kitchen-sink-logger
+
+## Setup Environment
+1. Create a Kinesis Firehose connected to ElasticSearch
+2. Look at the `tester.py` in the root of the repo for a simple example
+
+
 ## Basic Concepts
 ### Basic Concept #1: Log Storage
 Kitchen Sink Logger is super-duper simple. And it relies on the power of ElasticSearch (and it could be easily ported to any other logging destination, such as Splunk, Graylog, etc.). ElasticSearch is a no-brainer for time-stamped data in key-value pairs. In Kitchen Sink Logger, we want to log as much data as we possible can in key-value pairs, and then worry later about how we're going to search for it. That's the beauty of using ElasticSearch.
@@ -40,6 +49,7 @@ In this example, we're going to load the backpack with the user's ID, department
 One of more common issues in dealing with serverless technology is logging across sessions. Suppose I have a data flow that runs across several lambas . . . how do I view a contiguous log across all of those sessions? Kitchen Sink Logger solves this problem by allowing you to save your backpack with a unique ID via a `StateMananger` to DynamoDB, and then re-load that backpack from any other session. This means that a Lambda can kick off a process, load the backpack with data and then save that backpack. The next Lambda can load all the data in the backpack and continue logging. As long as the backpack has a unique correlation ID, you will be able to see a perfect timeline of data flow in ElasticSearch, including all of the relevant contextual information.
 
 ####Lambda #1
+
 	 logger = KitchenSinkLogger()
      logger.with_item('user_id', 'tsmith')
      logger.info('Doing something')
@@ -47,6 +57,7 @@ One of more common issues in dealing with serverless technology is logging acros
      sm.upsert(logger.backpack)
 
 ####Lambda #2
+
 	 logger = KitchenSinkLogger()
      sm = StateManager(TableName='BackpackState')
      logger.backpack = sm.get(backpack_id)
@@ -62,6 +73,7 @@ This means that you can track not only the time of the overall processing of a m
 In this example, we're creating three timers: One for overall time, one for the first lambda, and one for the second lambda.
 
 ####Lambda #1
+
 	 logger = KitchenSinkLogger()
      logger.with_timer('OverallTime')
      logger.with_timer('LambdaOneTimer')
@@ -71,6 +83,7 @@ In this example, we're creating three timers: One for overall time, one for the 
      sm.upsert(logger.backpack)
 
 ####Lambda #2
+
 	 logger = KitchenSinkLogger()
      sm = StateManager(TableName='BackpackState')
      logger.backpack = sm.get(backpack_id)
