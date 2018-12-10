@@ -1,6 +1,4 @@
-import
-        ihis.listFollowersForUser((err, data) => {
-
+import boto3
 import logging
 import datetime
 import dateutil.parser
