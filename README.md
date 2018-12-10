@@ -48,7 +48,7 @@ In this example, we're going to load the backpack with the user's ID, department
 ### Basic Concept #3: Sharing the Backpack
 One of more common issues in dealing with serverless technology is logging across sessions. Suppose I have a data flow that runs across several lambas . . . how do I view a contiguous log across all of those sessions? Kitchen Sink Logger solves this problem by allowing you to save your backpack with a unique ID via a `StateMananger` to DynamoDB, and then re-load that backpack from any other session. This means that a Lambda can kick off a process, load the backpack with data and then save that backpack. The next Lambda can load all the data in the backpack and continue logging. As long as the backpack has a unique correlation ID, you will be able to see a perfect timeline of data flow in ElasticSearch, including all of the relevant contextual information.
 
-####Lambda #1
+#### Lambda #1
 
 	 logger = KitchenSinkLogger()
      logger.with_item('user_id', 'tsmith')
@@ -56,7 +56,7 @@ One of more common issues in dealing with serverless technology is logging acros
      sm = StateManager(TableName='BackpackState')
      sm.upsert(logger.backpack)
 
-####Lambda #2
+#### Lambda #2
 
 	 logger = KitchenSinkLogger()
      sm = StateManager(TableName='BackpackState')
@@ -72,7 +72,7 @@ This means that you can track not only the time of the overall processing of a m
 
 In this example, we're creating three timers: One for overall time, one for the first lambda, and one for the second lambda.
 
-####Lambda #1
+#### Lambda #1
 
 	 logger = KitchenSinkLogger()
      logger.with_timer('OverallTime')
@@ -82,7 +82,7 @@ In this example, we're creating three timers: One for overall time, one for the 
      sm = StateManager(TableName='BackpackState')
      sm.upsert(logger.backpack)
 
-####Lambda #2
+#### Lambda #2
 
 	 logger = KitchenSinkLogger()
      sm = StateManager(TableName='BackpackState')
